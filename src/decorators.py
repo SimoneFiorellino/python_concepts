@@ -14,6 +14,7 @@ Python already uses decorators: functions like:
 
 import time
 
+
 def func(f):
     def wrapper(*args, **kwargs):
         """
@@ -24,32 +25,42 @@ def func(f):
         result = f(*args, **kwargs)
         print("After function call")
         return result
+
     return wrapper
+
 
 def timer(f):
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = f(*args, **kwargs)
         end_time = time.time()
-        print(f"Function '{f.__name__}' executed in {end_time - start_time:.4f} seconds")
+        print(
+            f"Function '{f.__name__}' executed in {end_time - start_time:.4f} seconds"
+        )
         return result
+
     return wrapper
+
 
 @func
 def greet():
     print("Hello, World!")
 
+
 @func
 def personal_greet(name):
     print(f"Hello, {name}!")
+
 
 @func
 def add(a, b):
     return a + b
 
+
 @timer
 def sleep_function(seconds):
     time.sleep(seconds)
+
 
 greet()
 personal_greet("Alice")

@@ -1,8 +1,8 @@
 """
-Dunder methods (“double-underscore methods”) are special hooks that let 
-your class integrate seamlessly with Python's built-in behaviors. 
-They define how objects are created, compared, represented, called, 
-iterated over, used in operators, and much more. Python automatically 
+Dunder methods (“double-underscore methods”) are special hooks that let
+your class integrate seamlessly with Python's built-in behaviors.
+They define how objects are created, compared, represented, called,
+iterated over, used in operators, and much more. Python automatically
 invokes these methods in specific situations
 """
 
@@ -11,7 +11,7 @@ from functools import total_ordering
 from typing import Any, Dict, Iterator, List, Tuple
 
 
-@total_ordering # adds automatically the other ordering methods
+@total_ordering  # adds automatically the other ordering methods
 class Sorcerer:
     """
     A Sorcerer class that demonstrates many Python dunder methods.
@@ -26,7 +26,9 @@ class Sorcerer:
         # You could customize instance creation here
         return instance
 
-    def __init__(self, name: str, level: int, mana: int, spells: Dict[str, int] | None = None):
+    def __init__(
+        self, name: str, level: int, mana: int, spells: Dict[str, int] | None = None
+    ):
         # NOTE: we use __setattr__ internally, so to avoid infinite recursion
         # we bypass it for the initial attributes using super().__setattr__
         # super() is referred to the parent class (object here)
@@ -80,7 +82,7 @@ class Sorcerer:
         if not isinstance(other, Sorcerer):
             return NotImplemented
         return (self.name, self.level) == (other.name, other.level)
-    
+
     def __lt__(self, other: Any) -> bool:
         """
         Ordering: compare by level, then mana.
@@ -116,7 +118,7 @@ class Sorcerer:
     # ------------------------------------------------------------------
     def __iter__(self) -> Iterator[Tuple[str, int]]:
         """
-        Iterate over (spell_name, spell_level). 
+        Iterate over (spell_name, spell_level).
         If the class is an iterator then we implement __next__ as well.
         """
         return iter(self.spells.items())
@@ -162,7 +164,7 @@ class Sorcerer:
                 spells=self.spells.copy(),
             )
         raise ValueError("Can only add mana to Sorcerer")
-    
+
     def __sub__(self, other: Any) -> Sorcerer:
         """
         sorcerer - int
@@ -177,7 +179,7 @@ class Sorcerer:
                 spells=self.spells.copy(),
             )
         raise ValueError("Can only subtract mana from Sorcerer")
-    
+
     def __mul__(self, other: Any) -> Sorcerer:
         """
         sorcerer * other
@@ -191,7 +193,7 @@ class Sorcerer:
                 spells=self.spells.copy(),
             )
         raise ValueError("Can only multiply Sorcerer by int")
-    
+
     def __truediv__(self, other: Any) -> Sorcerer:
         """
         sorcerer / other
@@ -294,12 +296,20 @@ class Sorcerer:
     def known_spells(self) -> List[str]:
         return list(self.spells.keys())
 
+
 if __name__ == "__main__":
     print("\n========== SORCERER CLASS DEMO (VERBOSE) ==========\n")
 
     print(">>> Creating sorcerers s1 and s2...")
-    s1 = Sorcerer("Aelar", level=5, mana=20, spells={"fireball": 3, "shield": 1, "firebolt": 0})
-    s2 = Sorcerer("Lyra", level=7, mana=30, spells={"fireshild": 4, "fireball": 3, "haste": 3, "firebolt": 0})
+    s1 = Sorcerer(
+        "Aelar", level=5, mana=20, spells={"fireball": 3, "shield": 1, "firebolt": 0}
+    )
+    s2 = Sorcerer(
+        "Lyra",
+        level=7,
+        mana=30,
+        spells={"fireshild": 4, "fireball": 3, "haste": 3, "firebolt": 0},
+    )
     print("Created s1:", repr(s1))
     print("Created s2:", repr(s2))
     print()
@@ -320,8 +330,8 @@ if __name__ == "__main__":
     print()
 
     print("========== CONTAINER & ITEM ACCESS ==========")
-    print(f'Is "fireball" in s1?', "fireball" in s1)
-    print(f'Is "fireball" in s2?', "fireball" in s2)
+    print('Is "fireball" in s1?', "fireball" in s1)
+    print('Is "fireball" in s2?', "fireball" in s2)
     print('s2["fireball"]:', s2["fireball"])
 
     print("\nAdding s1['misty_step'] = 2 ...")
@@ -367,4 +377,3 @@ if __name__ == "__main__":
     print()
 
     print("\n========== END OF DEMO ==========\n")
-

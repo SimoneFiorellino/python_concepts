@@ -1,5 +1,5 @@
 """
-Assigning local_var = GLOBAL_VAR creates a faster local alias to the same object without copying it. 
+Assigning local_var = GLOBAL_VAR creates a faster local alias to the same object without copying it.
 Local lookups are quicker and make the function’s dependency explicit while still referring to the original global value.
 
 https://imaddabbura.github.io/til/python/python-lookup.html
@@ -7,6 +7,7 @@ https://imaddabbura.github.io/til/python/python-lookup.html
 
 import time
 import math
+
 
 class Timer:
     def __init__(self, label=""):
@@ -28,23 +29,23 @@ GLOBAL_LIST = [i * 0.001 for i in range(N)]
 
 def compute_with_global():
     total = 0.0
-    for _ in range(250):          # outer loop to amplify cost
-        for x in GLOBAL_LIST:     # global lookup in inner loop
+    for _ in range(250):  # outer loop to amplify cost
+        for x in GLOBAL_LIST:  # global lookup in inner loop
             total += math.sin(x) * math.cos(x)
     return total
 
 
 def compute_with_local_alias():
-    local_list = GLOBAL_LIST            # alias, no copy
+    local_list = GLOBAL_LIST  # alias, no copy
     total = 0.0
     for _ in range(250):
-        for x in local_list:            # local lookup in inner loop
+        for x in local_list:  # local lookup in inner loop
             total += math.sin(x) * math.cos(x)
     return total
 
 
 def compute_with_local_copy():
-    local_list = GLOBAL_LIST.copy()     # real copy (extra cost)
+    local_list = GLOBAL_LIST.copy()  # real copy (extra cost)
     total = 0.0
     for _ in range(250):
         for x in local_list:
