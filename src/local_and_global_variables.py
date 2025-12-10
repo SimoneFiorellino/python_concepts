@@ -1,6 +1,8 @@
 """
 Assigning local_var = GLOBAL_VAR creates a faster local alias to the same object without copying it. 
 Local lookups are quicker and make the function’s dependency explicit while still referring to the original global value.
+
+https://imaddabbura.github.io/til/python/python-lookup.html
 """
 
 import time
